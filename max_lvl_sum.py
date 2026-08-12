@@ -13,9 +13,13 @@ class Solution(object):
         :type root: Optional[TreeNode]
         :rtype: int
         """
+        # * another level based search, keep track of max sum/lvl and cur lvl
+        # similar method as before, have a deque, keep track of all nodes in a specific lvl, size is len of deque
+
         if not root:
             return 0
-            
+        
+        # * could be neg if all nodes are
         max_sum = float('-inf')
         max_level = 1
         current_level = 1
@@ -31,12 +35,13 @@ class Solution(object):
                 node = queue.popleft()
                 level_sum += node.val
                 
+                # then just add next lvl nodes
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
             
-            # update max_sum and max_level if the current level sum is strictly greater
+            # update max_sum and max_level if the current level sum is strictly greater <- want the maximal sum
             if level_sum > max_sum:
                 max_sum = level_sum
                 max_level = current_level
